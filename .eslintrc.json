@@ -1,0 +1,21 @@
+{
+  "parser": "babel",
+  "extends": ["prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "extends": ["airbnb", "prettier", "plugin:react/recommended"],
+    "plugins": ["prettier"],
+    "parser": "babel-eslint",
+    "rules": {
+      "prettier/prettier": "error",
+      "no-unused-vars": "warn",
+      "no-console": "off",
+      "func-names": "off",
+      "no-process-exit": "off",
+      "object-shorthand": "off",
+      "class-methods-use-this": "off",
+      "react/prop-types": 0,
+      "arrow-parens": 0
+    }
+  }
+}
