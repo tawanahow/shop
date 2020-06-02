@@ -1,4 +1,5 @@
 {
   "singleQuote": true,
-  "arrow-parens": 0
+  "arrow-parens": 0,
+  "semi": false
 }
