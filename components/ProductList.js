@@ -9,7 +9,7 @@ import {
 } from '@shopify/polaris'
 import store from 'store-js'
 
-const GET_PRODUCT_BY_ID = gql`
+const GET_PRODUCTS_BY_ID = gql`
   query getProducts($ids: [ID!]!) {
     nodes(ids: $ids) {
       ... on Product {
@@ -36,3 +36,24 @@ const GET_PRODUCT_BY_ID = gql`
     }
   }
 `
+
+function ProductList() {
+  const { loading, error, data } = useQuery(GET_PRODUCTS_BY_ID, {
+    variables: { ids: store.get('ids') },
+  })
+
+  if (loading) return <div>Loading dot dot dot</div>
+  if (error) return <div>{error.message}</div>
+
+  console.log('this is the product data', data)
+  return (
+    <div>
+      <h1>These are the selected products:</h1>
+      {data.nodes.map((item) => {
+        return <p key={item.id}>{item.title}</p>
+      })}
+    </div>
+  )
+}
+
+export default ProductList
