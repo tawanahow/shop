@@ -24,8 +24,8 @@ const Index = () => {
         onCancel={() => setModal({ open: false })}
         onSelection={(resources) => handleSection(resources)}
       />
-      <Layout>
-        {emptyState ? (
+      {emptyState ? (
+        <Layout>
           <EmptyState
             heading="Manage your inventory transfers"
             action={{
@@ -33,11 +33,13 @@ const Index = () => {
               onAction: () => setModal({ open: true }),
             }}
             image="https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg"
-          ></EmptyState>
-        ) : (
-          <ProductList />
-        )}
-      </Layout>
+          >
+            <p>Select Products</p>
+          </EmptyState>
+        </Layout>
+      ) : (
+        <ProductList />
+      )}
     </Page>
   )
 }
