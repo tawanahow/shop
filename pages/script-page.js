@@ -59,46 +59,72 @@ function ScriptPage() {
   console.log(data)
 
   return (
-    <div>
-      <h1>Current script tags:</h1>
-      <button
-        type="submit"
-        onClick={() => {
-          createScripts({
-            variables: {
-              input: {
-                src: 'https://d2bde428dc92.ngrok.io/test-script.js',
-                displayScope: 'ALL',
-              },
-            },
-            refetchQueries: [{ query: QUERY_SCRIPT_TAGS }],
-          })
-        }}
-      >
-        Create Script Tag
-      </button>
-
-      {data.scriptTags.edges.map((item) => {
-        return (
-          <div key={item.node.id}>
-            <p>{item.node.id}</p>
-            <button
+    <Page>
+      <Layout>
+        <Layout.Section>
+          <Card title="These are the Script Tags:" sectioned>
+            <p>Create or Delete a Script Tag</p>
+          </Card>
+        </Layout.Section>
+        <Layout.Section secondary>
+          <Card title="Delete Tag" sectioned>
+            <Button
+              primary
+              size="slim"
               type="submit"
               onClick={() => {
-                deleteScripts({
+                createScripts({
                   variables: {
-                    id: item.node.id,
+                    input: {
+                      src: 'https://d2bde428dc92.ngrok.io/test-script.js',
+                      displayScope: 'ALL',
+                    },
+                    refetchQueries: [{ query: QUERY_SCRIPT_TAGS }],
                   },
-                  refetchQueries: [{ query: QUERY_SCRIPT_TAGS }],
                 })
               }}
             >
-              Delete Script Tag
-            </button>
-          </div>
-        )
-      })}
-    </div>
+              Create Script Tag
+            </Button>
+          </Card>
+        </Layout.Section>
+        <Layout.Section>
+          <Card>
+            <ResourceList
+              showHeader
+              resourceName={{ singular: 'Script', plural: 'Scripts' }}
+              items={data.scriptTags.edges}
+              renderItem={(item) => {
+                return (
+                  <ResourceList.Item id={item.id}>
+                    <Stack>
+                      <Stack.Item>
+                        <p>{item.node.id}</p>
+                      </Stack.Item>
+                      <Stack.Item>
+                        <Button
+                          type="submit"
+                          onClick={() => {
+                            deleteScripts({
+                              variables: {
+                                id: item.node.id,
+                              },
+                              refetchQueries: [{ query: QUERY_SCRIPT_TAGS }],
+                            })
+                          }}
+                        >
+                          Delete Script Tag
+                        </Button>
+                      </Stack.Item>
+                    </Stack>
+                  </ResourceList.Item>
+                )
+              }}
+            />
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
   )
 }
 //comment reset
