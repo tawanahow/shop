@@ -28,6 +28,7 @@ const handle = app.getRequestHandler()
 
 const { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_KEY } = process.env
 
+const server = new Koa()
 const router = new KoaRouter()
 
 router.get('/api/products', async (ctx) => {
@@ -41,8 +42,11 @@ router.get('/api/products', async (ctx) => {
   }
 })
 
+//Router Middleware
+server.use(router.allowedMethods())
+server.use(router.routes())
+
 app.prepare().then(() => {
-  const server = new Koa()
   server.use(session({ sameSite: 'none', secure: true }, server))
   server.keys = [SHOPIFY_API_SECRET_KEY]
 
@@ -66,10 +70,6 @@ app.prepare().then(() => {
 
   server.use(graphQLProxy({ version: ApiVersion.October19 }))
   server.use(verifyRequest())
-
-  //Router Middleware
-  server.use(router.allowedMethods())
-  server.use(router.routes())
 
   server.use(async (ctx) => {
     await handle(ctx.req, ctx.res)
