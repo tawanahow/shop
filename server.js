@@ -32,8 +32,14 @@ const { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_KEY } = process.env
 const server = new Koa()
 const router = new KoaRouter()
 
-const products = []
+//mongo db for the refactor
+const products = [
+  {
+    image1: 'test image',
+  },
+]
 
+//endpoint GET request
 router.get('/api/products', async (ctx) => {
   try {
     ctx.body = {
@@ -45,10 +51,12 @@ router.get('/api/products', async (ctx) => {
   }
 })
 
+//endpoint POST request
 router.post('/api/products', koaBody(), async (ctx) => {
   try {
     const body = ctx.request.body
     products.push(body)
+    ctx.body = 'item added'
   } catch (error) {
     console.log(error)
   }

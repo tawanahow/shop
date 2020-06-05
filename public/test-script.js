@@ -9,7 +9,7 @@ const makeHeader = (data) => {
 }
 
 fetch(
-  'https://cors-anywhere.herokuapp.com/https://1ca58fd15c27.ngrok.io/api/products?shop=thdevstore.myshopify.com'
+  'https://cors-anywhere.herokuapp.com/https://bfae6683e0c4.ngrok.io/api/products?shop=thdevstore.myshopify.com'
 )
   .then((res) => res.json())
   .then((data) => {
