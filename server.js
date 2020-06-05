@@ -10,6 +10,7 @@
 
 require('isomorphic-fetch')
 const Koa = require('koa')
+const KoaRouter = require('koa-router')
 const next = require('next')
 const { default: createShopifyAuth } = require('@shopify/koa-shopify-auth')
 const dotenv = require('dotenv')
@@ -26,6 +27,19 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 
 const { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_KEY } = process.env
+
+const router = new KoaRouter()
+
+router.get('/api/products', async (ctx) => {
+  try {
+    ctx.body = {
+      status: 'success',
+      data: 'Hello this is from the Public API',
+    }
+  } catch (err) {
+    console.log(error)
+  }
+})
 
 app.prepare().then(() => {
   const server = new Koa()
@@ -52,6 +66,11 @@ app.prepare().then(() => {
 
   server.use(graphQLProxy({ version: ApiVersion.October19 }))
   server.use(verifyRequest())
+
+  //Router Middleware
+  server.use(router.allowedMethods())
+  server.use(router.routes())
+
   server.use(async (ctx) => {
     await handle(ctx.req, ctx.res)
     ctx.respond = false

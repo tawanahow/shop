@@ -79,8 +79,8 @@ function ScriptPage() {
                       src: 'https://d2bde428dc92.ngrok.io/test-script.js',
                       displayScope: 'ALL',
                     },
-                    refetchQueries: [{ query: QUERY_SCRIPT_TAGS }],
                   },
+                  refetchQueries: [{ query: QUERY_SCRIPT_TAGS }],
                 })
               }}
             >
