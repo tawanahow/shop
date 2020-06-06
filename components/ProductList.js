@@ -2,6 +2,7 @@ import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 import {
   Card,
+  Button,
   ResourceList,
   Stack,
   TextStyle,
@@ -45,7 +46,6 @@ function ProductList() {
   if (loading) return <div>Loading...</div>
   if (error) return <div>{error.message}</div>
 
-  console.log('this is the product data', data)
   return (
     <>
       <Card>
@@ -69,12 +69,12 @@ function ProductList() {
               <ResourceList.Item
                 id={item.id}
                 media={media}
-                accessiblityLabel={`View details for ${item.titla}`}
+                accessibilityLabel={`View details for ${item.title}`}
               >
                 <Stack>
                   <Stack.Item fill>
                     <h3>
-                      <TextStyle variations="strong">{item.title}</TextStyle>
+                      <TextStyle variation="strong">{item.title}</TextStyle>
                     </h3>
                   </Stack.Item>
                   <Stack.Item>

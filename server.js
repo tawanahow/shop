@@ -33,7 +33,7 @@ const server = new Koa()
 const router = new KoaRouter()
 
 //mongo db for the refactor
-const products = [
+var products = [
   {
     image1: 'test image',
   },
@@ -57,6 +57,16 @@ router.post('/api/products', koaBody(), async (ctx) => {
     const body = ctx.request.body
     products.push(body)
     ctx.body = 'item added'
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+//DELETE request..will reset product array
+router.delete('/api/products', koaBody(), async (ctx) => {
+  try {
+    products = []
+    ctx.body = 'all items are deleted'
   } catch (error) {
     console.log(error)
   }
